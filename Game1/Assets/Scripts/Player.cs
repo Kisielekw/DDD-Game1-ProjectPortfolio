@@ -6,18 +6,20 @@ public class Player : MonoBehaviour
 {
     public float m_MaxHealth;
 
-    private const float speed = 0.15f;
+    private float speed = 0.15f;
+    private bool isDodgeing;
+    private float dodgeEnd;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        isDodgeing = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        Dodge();
     }
 
     private void FixedUpdate()
@@ -52,5 +54,25 @@ public class Player : MonoBehaviour
         direction.Normalize();
 
         transform.position += new Vector3(direction.x * speed, direction.y * speed, direction.z);
+    }
+
+    /// <summary>
+    /// Method that contains player dodgeing
+    /// </summary>
+    private void Dodge()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && !isDodgeing)
+        {
+            isDodgeing = true;
+            speed = 0.3f;
+            dodgeEnd = Time.time + 0.25f;
+            Debug.Log("I dodge");
+        }
+
+        if (Time.time >= dodgeEnd)
+        {
+            isDodgeing = false;
+            speed = 0.15f;
+        }
     }
 }
