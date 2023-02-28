@@ -1,10 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    public float m_MaxHealth;
+    [SerializeField]
+    private float m_MaxHealth;
+
+    [SerializeField]
+    private Attack m_Melee;
+    [SerializeField]
+    private float m_AttackSpeed;
+    private float m_AttackEnd;
+
 
     private float speed = 0.15f;
     private bool isDodgeing;
@@ -14,6 +23,9 @@ public class Player : MonoBehaviour
     void Start()
     {
         isDodgeing = false;
+
+        m_Melee.Owner = gameObject;
+        m_AttackEnd = -1;
     }
 
     // Update is called once per frame
@@ -74,5 +86,20 @@ public class Player : MonoBehaviour
             isDodgeing = false;
             speed = 0.15f;
         }
+    }
+
+    private void OnAttack()
+    {
+        if (m_AttackEnd > Time.time)
+            return;
+
+        Vector3 mousePos = Mouse.current.position.ReadValue();
+        mousePos.z = 0;
+        Vector3 attackDir = Camera.main.ScreenToWorldPoint(mousePos) - transform.position;
+
+        Attack attack = Instantiate(m_Melee, transform.position, 
+            Quaternion.LookRotation(new Vector3(0, 0, -1), attackDir), transform);
+        m_AttackEnd = Time.time + m_AttackSpeed;
+        attack.AttackEnd = m_AttackEnd;
     }
 }
