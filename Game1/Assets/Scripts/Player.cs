@@ -15,13 +15,18 @@ public class Player : MonoBehaviour
     private float m_AttackEnd;
 
 
-    private float speed = 0.15f;
+    private Vector2 m_MoveAxis;
+
+    [SerializeField]
+    private float m_Speed;
     private bool isDodgeing;
     private float dodgeEnd;
 
     // Start is called before the first frame update
     void Start()
     {
+        m_MoveAxis = Vector2.zero;
+
         isDodgeing = false;
 
         m_Melee.Owner = gameObject;
@@ -31,64 +36,42 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Dodge();
+        if (isDodgeing && Time.time >= dodgeEnd)
+        {
+            isDodgeing = false;
+            m_Speed /= 2;
+        }
     }
 
     private void FixedUpdate()
     {
-        Movement();
+        if (m_MoveAxis != Vector2.zero)
+            transform.position += new Vector3(m_MoveAxis.x, m_MoveAxis.y, 0) * m_Speed * Time.deltaTime;
     }
 
-    /// <summary>
-    /// Method that contains all the movement for the player
-    /// </summary>
-    private void Movement()
+    public void OnMove(InputAction.CallbackContext context)
     {
-        
-        Vector3 direction = new Vector3();
-        if (Input.GetKey(KeyCode.A))
-        {
-            direction.x -= 1;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            direction.x += 1;
-        }
-        if (Input.GetKey(KeyCode.W))
-        {
-            direction.y += 1;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            direction.y -= 1;
-        }
+        m_MoveAxis = context.ReadValue<Vector2>();
 
-        direction.Normalize();
-
-        transform.position += new Vector3(direction.x * speed, direction.y * speed, direction.z);
+        if (m_MoveAxis.sqrMagnitude < 0.01f)
+            m_MoveAxis = Vector2.zero;
     }
 
     /// <summary>
     /// Method that contains player dodgeing
     /// </summary>
-    private void Dodge()
+    public void OnDodge()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isDodgeing)
-        {
-            isDodgeing = true;
-            speed = 0.3f;
-            dodgeEnd = Time.time + 0.25f;
-            Debug.Log("I dodge");
-        }
+        if (isDodgeing)
+            return;
 
-        if (Time.time >= dodgeEnd)
-        {
-            isDodgeing = false;
-            speed = 0.15f;
-        }
+        isDodgeing = true;
+        m_Speed *= 2;
+        dodgeEnd = Time.time + 0.25f;
+        Debug.Log("I dodge");
     }
 
-    private void OnAttack()
+    public void OnAttack()
     {
         if (m_AttackEnd > Time.time)
             return;
