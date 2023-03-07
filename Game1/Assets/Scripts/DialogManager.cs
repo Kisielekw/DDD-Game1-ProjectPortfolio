@@ -79,7 +79,6 @@ public class DialogManager : MonoBehaviour
     /// </summary>
     private void ExitDialog()
     {
-        inDilaog = false;
         DialogPannel.SetActive(false);
         DialogText.text = "";
 
@@ -89,12 +88,27 @@ public class DialogManager : MonoBehaviour
             QuestDescription.text = currentDialog.Quest.QuestDescription;
             QuestPannel.SetActive(true);
         }
+        else inDilaog = false;
+    }
+
+    /// <summary>
+    /// Method for the quest butons
+    /// </summary>
+    /// <param name="pAccept">If it was acceped</param>
+    public void QuestButtomn(bool pAccept)
+    {
+        if (pAccept)
+        {
+            AcceptQuest();
+        }
+        inDilaog = false;
+        QuestPannel.SetActive(false);
     }
 
     /// <summary>
     /// Adds a quest to the player class
     /// </summary>
-    public void AcceptQuest()
+    private void AcceptQuest()
     {
         gameObject.GetComponent<Player>().AddQuest(currentDialog.Quest);
     }
