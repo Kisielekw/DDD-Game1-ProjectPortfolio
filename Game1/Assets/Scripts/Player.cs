@@ -22,6 +22,9 @@ public class Player : MonoBehaviour
     private bool isDodgeing;
     private float dodgeEnd;
 
+    [SerializeField]
+    private List<Quest> m_quests;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +34,8 @@ public class Player : MonoBehaviour
 
         m_Melee.Owner = gameObject;
         m_AttackEnd = -1;
+
+        m_quests = new List<Quest>();
     }
 
     // Update is called once per frame
@@ -45,7 +50,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (m_MoveAxis != Vector2.zero)
+        if (m_MoveAxis != Vector2.zero && !DialogManager.Instance().inDilaog)
             transform.position += new Vector3(m_MoveAxis.x, m_MoveAxis.y, 0) * m_Speed * Time.deltaTime;
     }
 
@@ -84,5 +89,10 @@ public class Player : MonoBehaviour
             Quaternion.LookRotation(new Vector3(0, 0, -1), attackDir), transform);
         m_AttackEnd = Time.time + m_AttackSpeed;
         attack.AttackEnd = m_AttackEnd;
+    }
+
+    public void AddQuest(Quest pQuest)
+    {
+        if(!m_quests.Contains(pQuest)) m_quests.Add(pQuest);
     }
 }
