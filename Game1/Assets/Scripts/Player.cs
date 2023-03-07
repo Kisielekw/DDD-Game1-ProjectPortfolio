@@ -91,6 +91,11 @@ public class Player : MonoBehaviour
         attack.AttackEnd = m_AttackEnd;
     }
 
+
+    /// <summary>
+    /// Adds a quest to the playes list of quests
+    /// </summary>
+    /// <param name="pQuest">The quest you want to add to the player</param>
     public void AddQuest(Quest pQuest)
     {
         if(!m_quests.Contains(pQuest)) m_quests.Add(pQuest);

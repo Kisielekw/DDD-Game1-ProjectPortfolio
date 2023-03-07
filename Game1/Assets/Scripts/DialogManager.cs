@@ -25,6 +25,10 @@ public class DialogManager : MonoBehaviour
         instance = this;
     }
 
+    /// <summary>
+    /// Returns the instance of the dialog manager
+    /// </summary>
+    /// <returns></returns>
     public static DialogManager Instance() 
     {
         return instance;
@@ -47,6 +51,10 @@ public class DialogManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sets up UI to show dialog
+    /// </summary>
+    /// <param name="pDialog">The Dialog to show the player</param>
     public void EnterDialog(Dialog pDialog)
     {
         currentDialog = pDialog;
@@ -57,12 +65,18 @@ public class DialogManager : MonoBehaviour
         ContinueDialog();
     }
 
+    /// <summary>
+    /// Continues the dialog and checks weather to end or not
+    /// </summary>
     public void ContinueDialog()
     {
         if (dialogPointer < currentDialog.Speech.Length && inDilaog) DialogText.text = currentDialog.Speech[dialogPointer++];
         else ExitDialog();
     }
 
+    /// <summary>
+    /// Exits the dialog and show the quest menu if necesery
+    /// </summary>
     private void ExitDialog()
     {
         inDilaog = false;
@@ -77,6 +91,9 @@ public class DialogManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Adds a quest to the player class
+    /// </summary>
     public void AcceptQuest()
     {
         gameObject.GetComponent<Player>().AddQuest(currentDialog.Quest);
