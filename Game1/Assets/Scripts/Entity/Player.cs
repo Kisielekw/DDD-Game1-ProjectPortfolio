@@ -1,20 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Player : MonoBehaviour
+public class Player : Entity
 {
-    [SerializeField]
-    private float m_MaxHealth;
-
-    [SerializeField]
-    private Attack m_Melee;
-    [SerializeField]
-    private float m_AttackSpeed;
-    private float m_AttackEnd;
-
-
     private Vector2 m_MoveAxis;
 
     [SerializeField]
@@ -25,6 +16,17 @@ public class Player : MonoBehaviour
     [SerializeField]
     private List<Quest> m_quests;
 
+    [Serializable]
+    public struct Attacks
+    {
+        public AttackInfo Melee;
+    }
+
+    [SerializeField]
+    private Attacks m_Attacks;
+
+    private bool m_CanAct = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,10 +34,9 @@ public class Player : MonoBehaviour
 
         isDodgeing = false;
 
-        m_Melee.Owner = gameObject;
-        m_AttackEnd = -1;
-
         m_quests = new List<Quest>();
+
+        m_Attacks.Melee.Owner = gameObject;
     }
 
     // Update is called once per frame
@@ -76,21 +77,34 @@ public class Player : MonoBehaviour
         Debug.Log("I dodge");
     }
 
+    /// <summary>
+    /// Attempt to create melee attack from info template
+    /// </summary>
     public void OnAttack()
     {
-        if (m_AttackEnd > Time.time)
+        if (!m_CanAct)
             return;
 
+        Attack attack = Attack.Create(m_Attacks.Melee);
+
+        // Rotate attack towards mouse position
         Vector3 mousePos = Mouse.current.position.ReadValue();
         mousePos.z = 0;
         Vector3 attackDir = Camera.main.ScreenToWorldPoint(mousePos) - transform.position;
-
-        Attack attack = Instantiate(m_Melee, transform.position, 
-            Quaternion.LookRotation(new Vector3(0, 0, -1), attackDir), transform);
-        m_AttackEnd = Time.time + m_AttackSpeed;
-        attack.AttackEnd = m_AttackEnd;
+        attackDir.z = 0;
+        attack.transform.Rotate(new Vector3(0, 0, 
+            Vector3.SignedAngle(new Vector3(1, 0, 0), attackDir, new Vector3(0, 0, 1))));
+        
+        m_CanAct = false;
     }
 
+    /// <summary>
+    /// Attack end Callback
+    /// </summary>
+    public void AttackEnd(Entity[] hitList)
+    {
+        m_CanAct = true;
+    }
 
     /// <summary>
     /// Adds a quest to the playes list of quests
@@ -99,5 +113,10 @@ public class Player : MonoBehaviour
     public void AddQuest(Quest pQuest)
     {
         if(!m_quests.Contains(pQuest)) m_quests.Add(pQuest);
+    }
+
+    protected override void OnDeath()
+    {
+        
     }
 }
