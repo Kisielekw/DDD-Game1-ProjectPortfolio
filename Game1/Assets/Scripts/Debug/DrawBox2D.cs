@@ -26,11 +26,13 @@ public class DrawBox2D : MonoBehaviour
 
     void HiliteBox()
     {
+        Vector3 offset = new Vector3(boxCollider2D.offset.x, boxCollider2D.offset.y, 0);
+
         Vector3[] positions = new Vector3[4];
-        positions[0] = transform.TransformPoint( new Vector3(boxCollider2D.size.x / 2.0f, boxCollider2D.size.y / 2.0f,0));
-        positions[1] = transform.TransformPoint(new Vector3(-boxCollider2D.size.x / 2.0f, boxCollider2D.size.y / 2.0f,0));
-        positions[2] = transform.TransformPoint(new Vector3(-boxCollider2D.size.x / 2.0f, -boxCollider2D.size.y / 2.0f,0));
-        positions[3] = transform.TransformPoint(new Vector3(boxCollider2D.size.x / 2.0f, -boxCollider2D.size.y / 2.0f,0));
+        positions[0] = transform.TransformPoint( new Vector3(boxCollider2D.size.x / 2.0f, boxCollider2D.size.y / 2.0f,0) + offset);
+        positions[1] = transform.TransformPoint(new Vector3(-boxCollider2D.size.x / 2.0f, boxCollider2D.size.y / 2.0f,0) + offset);
+        positions[2] = transform.TransformPoint(new Vector3(-boxCollider2D.size.x / 2.0f, -boxCollider2D.size.y / 2.0f,0) + offset);
+        positions[3] = transform.TransformPoint(new Vector3(boxCollider2D.size.x / 2.0f, -boxCollider2D.size.y / 2.0f,0) + offset);
         lineRenderer.SetPositions(positions);
     }
 }
