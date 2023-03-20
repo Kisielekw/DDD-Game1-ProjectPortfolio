@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,6 +16,14 @@ public class Player : Entity
 
     [SerializeField]
     private List<Quest> m_quests;
+
+    [Serializable]
+    public struct ItemNumber
+    {
+        public Item item;
+        public int Number;
+    }
+    public List<ItemNumber> m_Inventory;
 
     [Serializable]
     public struct Attacks
@@ -37,6 +46,8 @@ public class Player : Entity
         m_quests = new List<Quest>();
 
         m_Attacks.Melee.Owner = gameObject;
+
+        m_Inventory = new List<ItemNumber>(10);
     }
 
     // Update is called once per frame
@@ -118,5 +129,37 @@ public class Player : Entity
     protected override void OnDeath()
     {
         
+    }
+
+    public void AddItem(Item pItem)
+    {
+        for (int i = 0; i < m_Inventory.Count; i++)
+        {
+            if (m_Inventory[i].item == pItem)
+            {
+                ItemNumber iN = m_Inventory[i];
+                iN.Number++;
+                return;
+            }
+        }
+
+        if (m_Inventory.Count == 10) return;
+        m_Inventory.Add(new ItemNumber() { item = pItem, Number = 1 });
+    }
+
+    void RemoveItem(Item pItem)
+    {
+        for (int i = 0; i < m_Inventory.Count; i++)
+        {
+            if (m_Inventory[i].item == pItem)
+            {
+                ItemNumber iN = m_Inventory[i];
+                iN.Number--;
+
+                if (m_Inventory[i].Number == 0) m_Inventory.Remove(iN);
+
+                return;
+            }
+        }
     }
 }
