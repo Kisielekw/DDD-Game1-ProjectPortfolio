@@ -67,9 +67,9 @@ public class Player : Entity
             transform.position += new Vector3(m_MoveAxis.x, m_MoveAxis.y, 0) * m_Speed * Time.deltaTime;
     }
 
-    public void OnMove(InputAction.CallbackContext context)
+    public void OnMove(InputValue val)
     {
-        m_MoveAxis = context.ReadValue<Vector2>();
+        m_MoveAxis = val.Get<Vector2>();
 
         if (m_MoveAxis.sqrMagnitude < 0.01f)
             m_MoveAxis = Vector2.zero;

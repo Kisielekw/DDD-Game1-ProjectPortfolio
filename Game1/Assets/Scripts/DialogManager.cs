@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using TMPro;
 
 public class DialogManager : MonoBehaviour
@@ -66,17 +67,22 @@ public class DialogManager : MonoBehaviour
         DialogPannel.SetActive(true);
         dialogPointer = 0;
 
-        ContinueDialog();
+        OnDialogContinue();
     }
 
     /// <summary>
     /// Continues the dialog and checks weather to end or not
     /// </summary>
-    public void ContinueDialog()
+    public void OnDialogContinue()
     {
-        if (!inDilaog) return;
-        if (dialogPointer < currentDialog.Speech.Length && inDilaog) DialogText.text = currentDialog.Speech[dialogPointer++];
-        else ExitDialog();
+        if (!inDilaog) 
+            return;
+
+        if (dialogPointer < currentDialog.Speech.Length && inDilaog)
+            DialogText.text = currentDialog.Speech[dialogPointer++];
+
+        else 
+            ExitDialog();
     }
 
     /// <summary>

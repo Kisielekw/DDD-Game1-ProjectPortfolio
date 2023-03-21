@@ -11,7 +11,7 @@
                     "id": "5e8e41b3-3b7d-4916-b1fc-336d4bbadb84",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press",
                     "initialStateCheck": false
                 },
                 {
@@ -43,11 +43,11 @@
                 },
                 {
                     "name": "DialogContinue",
-                    "type": "Button",
-                    "id": "ea0e449e-0e1c-471b-b1b9-8acc4c6c5ab3",
+                    "type": "PassThrough",
+                    "id": "030c3a27-53b9-44fc-89ff-771e7622e3bc",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press",
                     "initialStateCheck": false
                 }
             ],
@@ -135,18 +135,18 @@
                     "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "kbm",
                     "action": "DialogActivate",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "75beec96-ecae-400a-a04f-22b3b0438477",
+                    "id": "5dcf1ec6-d8d9-4543-97b7-f29f5a17f3b5",
                     "path": "<Keyboard>/e",
-                    "interactions": "Press",
+                    "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "kbm",
                     "action": "DialogContinue",
                     "isComposite": false,
                     "isPartOfComposite": false
