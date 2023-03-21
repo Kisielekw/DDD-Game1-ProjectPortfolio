@@ -2,19 +2,27 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class Enemy : MonoBehaviour
+public class Enemy : Entity
 {
+    private NavMeshAgent m_Agent;
 
-    // Start is called before the first frame update
+    public Transform target;
+
     void Start()
     {
-        
+        m_Agent = GetComponent<NavMeshAgent>();
+        m_Agent.updateRotation = false;
+        m_Agent.updateUpAxis = false;
+        m_Agent.updatePosition = false;
+        m_Agent.SetDestination(target.position);        
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        Vector3 nextPos = m_Agent.nextPosition;
+        nextPos.z = 0;
+        transform.position = nextPos;
     }
 }

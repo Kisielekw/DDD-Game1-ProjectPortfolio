@@ -4,8 +4,5 @@ using UnityEngine;
 
 public class Dummy : Entity
 {
-    protected override void OnDeath()
-    {
-        
-    }
+
 }

@@ -114,9 +114,4 @@ public class Player : Entity
     {
         if(!m_quests.Contains(pQuest)) m_quests.Add(pQuest);
     }
-
-    protected override void OnDeath()
-    {
-        
-    }
 }

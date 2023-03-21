@@ -2,14 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class Entity : MonoBehaviour
 {
     [Serializable]
-    public struct HealthStats
+    public struct EntityStats
     {
         public float Max;
-
         
         public float Current;
 
@@ -19,7 +19,9 @@ public abstract class Entity : MonoBehaviour
     }
 
     [SerializeField]
-    protected HealthStats m_Health;
+    protected EntityStats m_Health;
+
+    public UnityEvent<Entity>OnDeath;
 
     // Start is called before the first frame update
     void Start()
@@ -41,10 +43,8 @@ public abstract class Entity : MonoBehaviour
         m_Health.Current -= m_Health.Invincible ? 0f : damage;
 
         if (m_Health.Current <= 0f)
-            OnDeath();
+            OnDeath.Invoke(this);
 
         return true;
     }
-
-    protected abstract void OnDeath();
 }
