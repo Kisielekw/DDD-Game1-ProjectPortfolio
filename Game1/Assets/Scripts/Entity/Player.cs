@@ -5,6 +5,13 @@ using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[Serializable]
+public struct ItemNumber
+{
+    public Item item;
+    public int Number;
+}
+
 public class Player : Entity
 {
     private Vector2 m_MoveAxis;
@@ -17,12 +24,6 @@ public class Player : Entity
     [SerializeField]
     private List<Quest> m_quests;
 
-    [Serializable]
-    public struct ItemNumber
-    {
-        public Item item;
-        public int Number;
-    }
     public List<ItemNumber> m_Inventory;
 
     [Serializable]
