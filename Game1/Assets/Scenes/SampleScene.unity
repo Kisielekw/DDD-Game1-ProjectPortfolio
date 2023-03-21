@@ -4930,16 +4930,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5565856476577179750, guid: f4026c11845cebfec8452853ecf8127f, type: 3}
+      propertyPath: m_NotificationBehavior
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5565856476577179750, guid: f4026c11845cebfec8452853ecf8127f, type: 3}
       propertyPath: m_ActionEvents.Array.size
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5565856476577179750, guid: f4026c11845cebfec8452853ecf8127f, type: 3}
       propertyPath: m_ActionEvents.Array.data[4].m_ActionId
-      value: ea0e449e-0e1c-471b-b1b9-8acc4c6c5ab3
+      value: 030c3a27-53b9-44fc-89ff-771e7622e3bc
       objectReference: {fileID: 0}
     - target: {fileID: 5565856476577179750, guid: f4026c11845cebfec8452853ecf8127f, type: 3}
       propertyPath: m_ActionEvents.Array.data[4].m_ActionName
-      value: Player/DialogContinue[/Keyboard/f]
+      value: Player/DialogContinue[/Keyboard/e]
       objectReference: {fileID: 0}
     - target: {fileID: 5565856476577179750, guid: f4026c11845cebfec8452853ecf8127f, type: 3}
       propertyPath: m_ActionEvents.Array.data[4].m_PersistentCalls.m_Calls.Array.size
@@ -4947,7 +4951,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5565856476577179750, guid: f4026c11845cebfec8452853ecf8127f, type: 3}
       propertyPath: m_ActionEvents.Array.data[4].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5565856476577179750, guid: f4026c11845cebfec8452853ecf8127f, type: 3}
       propertyPath: m_ActionEvents.Array.data[4].m_PersistentCalls.m_Calls.Array.data[0].m_Target
