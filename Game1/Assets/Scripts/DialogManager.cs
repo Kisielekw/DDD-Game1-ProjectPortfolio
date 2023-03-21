@@ -14,11 +14,15 @@ public class DialogManager : MonoBehaviour
     public GameObject QuestPannel;
     public TextMeshProUGUI QuestName;
     public TextMeshProUGUI QuestDescription;
+    [Header("Shop")]
+    public GameObject ShopPannel;
 
     public bool inDilaog { get; private set; }
 
     private Dialog currentDialog;
     private int dialogPointer;
+
+    private ShopNPC currentShop;
 
     private void Awake()
     {
@@ -42,13 +46,13 @@ public class DialogManager : MonoBehaviour
 
     private void Update()
     {
-        if (inDilaog)
-        {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                ContinueDialog();
-            }
-        }
+        //if (inDilaog)
+        //{
+        //    if (Input.GetKeyDown(KeyCode.E))
+        //    {
+        //        ContinueDialog();
+        //    }
+        //}
     }
 
     /// <summary>
@@ -70,6 +74,7 @@ public class DialogManager : MonoBehaviour
     /// </summary>
     public void ContinueDialog()
     {
+        if (!inDilaog) return;
         if (dialogPointer < currentDialog.Speech.Length && inDilaog) DialogText.text = currentDialog.Speech[dialogPointer++];
         else ExitDialog();
     }
@@ -111,5 +116,18 @@ public class DialogManager : MonoBehaviour
     private void AcceptQuest()
     {
         gameObject.GetComponent<Player>().AddQuest(currentDialog.Quest);
+    }
+
+    public void EnterShop(ShopNPC pShop)
+    {
+        inDilaog = true;
+        ShopPannel.SetActive(true);
+        currentShop = pShop;
+    }
+
+    public void ExitShop()
+    {
+        inDilaog = false;
+        ShopPannel.SetActive(false);
     }
 }

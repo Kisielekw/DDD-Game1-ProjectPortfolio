@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class NPC : MonoBehaviour
+public class DialogNPC : MonoBehaviour
 {
     [Header("Speech")]
     public Dialog[] Dialogs;
