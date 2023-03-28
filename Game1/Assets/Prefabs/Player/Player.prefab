@@ -142,8 +142,12 @@ MonoBehaviour:
     Current: 0
     UnTargetable: 0
     Invincible: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
   m_Speed: 2
   m_quests: []
+  m_Inventory: []
   m_Attacks:
     Melee:
       Owner: {fileID: 0}
@@ -244,6 +248,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9590763d-8a83-4458-8c6d-da843880c210
     m_ActionName: Player/DialogActivate[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 030c3a27-53b9-44fc-89ff-771e7622e3bc
+    m_ActionName: Player/DialogContinue[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

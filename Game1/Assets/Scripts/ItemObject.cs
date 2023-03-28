@@ -3,18 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Item : MonoBehaviour
+public class ItemObject : MonoBehaviour
 {
-    [SerializeField]
-    public string Name;
-    public string Description;
-
     private bool inPlayerRange;
+
+    public Item Item;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        GetComponent<SpriteRenderer>().sprite = Item.Sprite;
     }
 
     // Update is called once per frame
@@ -22,7 +20,8 @@ public class Item : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && inPlayerRange)
         {
-            GameObject.FindWithTag("Player").GetComponent<Player>().AddItem(this);
+            GameObject.FindWithTag("Player").GetComponent<Player>().AddItem(Item);
+            Destroy(gameObject);
         }
     }
 

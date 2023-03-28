@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEditor.Progress;
 
 [Serializable]
 public struct ItemNumber
@@ -124,7 +125,11 @@ public class Player : Entity
     /// <param name="pQuest">The quest you want to add to the player</param>
     public void AddQuest(Quest pQuest)
     {
-        if(!m_quests.Contains(pQuest)) m_quests.Add(pQuest);
+        if (!m_quests.Contains(pQuest))
+        { 
+            m_quests.Add(pQuest);
+            m_quests[m_quests.Count - 1].UpdateItemInitial(m_Inventory);
+        }
     }
 
     public void AddItem(Item pItem)
@@ -135,11 +140,13 @@ public class Player : Entity
             {
                 ItemNumber iN = m_Inventory[i];
                 iN.Number++;
+                m_Inventory[i] = iN;
+                
                 return;
             }
         }
 
-        if (m_Inventory.Count == 10) return;
+        if (m_Inventory.Count == 9) return;
         m_Inventory.Add(new ItemNumber() { item = pItem, Number = 1 });
     }
 
@@ -156,6 +163,22 @@ public class Player : Entity
 
                 return;
             }
+        }
+    }
+
+    void UpdateItemQuest(Item pItem)
+    {
+        foreach (Quest quest in m_quests)
+        {
+            quest.UpdateItem(pItem);
+        }
+    }
+
+    void UpdateKillQuest()
+    {
+        foreach (Quest quest in m_quests)
+        {
+            quest.UpdateKill();
         }
     }
 }

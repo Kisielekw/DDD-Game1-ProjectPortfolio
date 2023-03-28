@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.UI;
 
 public class DialogManager : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class DialogManager : MonoBehaviour
     public TextMeshProUGUI QuestDescription;
     [Header("Shop")]
     public GameObject ShopPannel;
+    public GameObject[] PlayerSlots;
+    public GameObject[] ShopSlots;
 
     public bool inDilaog { get; private set; }
 
@@ -43,17 +46,6 @@ public class DialogManager : MonoBehaviour
     {
         inDilaog = false;
         DialogPannel.SetActive(false);
-    }
-
-    private void Update()
-    {
-        //if (inDilaog)
-        //{
-        //    if (Input.GetKeyDown(KeyCode.E))
-        //    {
-        //        ContinueDialog();
-        //    }
-        //}
     }
 
     /// <summary>
@@ -93,7 +85,7 @@ public class DialogManager : MonoBehaviour
         DialogPannel.SetActive(false);
         DialogText.text = "";
 
-        if(currentDialog.Quest != null)
+        if(currentDialog.Quest != null && !currentDialog.Quest.isStarted)
         {
             QuestName.text = currentDialog.Quest.QuestName;
             QuestDescription.text = currentDialog.Quest.QuestDescription;
@@ -106,11 +98,12 @@ public class DialogManager : MonoBehaviour
     /// Method for the quest butons
     /// </summary>
     /// <param name="pAccept">If it was acceped</param>
-    public void QuestButtomn(bool pAccept)
+    public void QuestButton(bool pAccept)
     {
         if (pAccept)
         {
             AcceptQuest();
+            currentDialog.Quest.isStarted = true;
         }
         inDilaog = false;
         QuestPannel.SetActive(false);
@@ -129,6 +122,22 @@ public class DialogManager : MonoBehaviour
         inDilaog = true;
         ShopPannel.SetActive(true);
         currentShop = pShop;
+
+        List<ItemNumber> playerInv = GetComponent<Player>().m_Inventory;
+        List<ItemNumber> shopInv = currentShop.ItemList;
+
+        for(int i = 0; i < 9; i++)
+        {
+            if(playerInv.Count > i)
+            {
+                PlayerSlots[i].GetComponent<Image>().sprite = playerInv[i].item.Sprite;
+            }
+
+            if (shopInv.Count > i)
+            {
+                ShopSlots[i].GetComponent<Image>().Equals(shopInv[i].item);
+            }
+        }
     }
 
     public void ExitShop()
