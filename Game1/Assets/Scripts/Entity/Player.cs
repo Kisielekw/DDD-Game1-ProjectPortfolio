@@ -27,15 +27,25 @@ public class Player : Entity
 
     public List<ItemNumber> m_Inventory;
 
+    /// <summary>
+    /// Struct container for all player attacks
+    /// </summary>
     [Serializable]
     public struct Attacks
     {
+        /// <summary>
+        /// Basic melee attack
+        /// </summary>
         public AttackInfo Melee;
     }
 
     [SerializeField]
     private Attacks m_Attacks;
 
+    /// <summary>
+    /// Boolean describing wether player can take new actions
+    /// Used for locking input whilst in animation i.e. whilst dodgeing
+    /// </summary>
     private bool m_CanAct = true;
 
     // Start is called before the first frame update
@@ -68,6 +78,10 @@ public class Player : Entity
             transform.position += new Vector3(m_MoveAxis.x, m_MoveAxis.y, 0) * m_Speed * Time.deltaTime;
     }
 
+    /// <summary>
+    /// Captures current movement axis using unity's Input Event System
+    /// </summary>
+    /// <param name="val">Input event parameters</param>
     public void OnMove(InputValue val)
     {
         m_MoveAxis = val.Get<Vector2>();
