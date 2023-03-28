@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// Abstract class used to represent all targetable objects
+/// At base all entities must have a health value, targetable and invincible flags see <see cref="Entity.EntityStats"/>
+/// </summary>
 public abstract class Entity : MonoBehaviour
 {
     /// <summary>

@@ -5,6 +5,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// Generic attack
+/// Attacks are created as prefabs then are created from a <see cref="AttackInfo"/> template
+/// then constructed using the <see cref="Attack.Create(AttackInfo)"/> function.
+/// </summary>
 [Serializable]
 public class Attack : MonoBehaviour
 {
@@ -166,11 +171,11 @@ public class Attack : MonoBehaviour
     }
 }
 
-[Serializable]
 /// <summary>
 /// Struct container, describing values to be set
-/// Used to export additional variables on an imported prefab
+/// Used to export additional variables on an imported prefab and created using the <see cref="Attack.Create(AttackInfo)"/> function.
 /// </summary>
+[Serializable]
 public struct AttackInfo
 {
     /// <summary>
