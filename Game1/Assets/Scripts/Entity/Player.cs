@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEditor.Progress;
 
 [Serializable]
 public struct ItemNumber
