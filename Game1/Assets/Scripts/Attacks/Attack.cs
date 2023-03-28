@@ -8,6 +8,9 @@ using UnityEngine.Events;
 [Serializable]
 public class Attack : MonoBehaviour
 {
+    /// <summary>
+    /// UID for the owner gameobject
+    /// </summary>
     public int OwnerID { get; private set; }
 
     [SerializeField]
@@ -147,7 +150,12 @@ public class Attack : MonoBehaviour
     /// </summary>
     public static Attack Create(AttackInfo info)
     {
-        Attack attack = UnityEngine.Object.Instantiate(info.Prefab, info.Owner.transform, info.UseWorldSpace);
+        Transform parent = info.Owner.transform;
+
+        if (info.UseWorldSpace)
+            parent = parent.parent;
+
+        Attack attack = UnityEngine.Object.Instantiate(info.Prefab, parent, info.UseWorldSpace);
 
         attack.OnHit = info.OnHit;
         attack.OnEnd = info.OnEnd;
@@ -165,14 +173,31 @@ public class Attack : MonoBehaviour
 /// </summary>
 public struct AttackInfo
 {
+    /// <summary>
+    /// Owner for the attack being spawned
+    /// </summary>
     [HideInInspector]
     public GameObject Owner;
 
+    /// <summary>
+    /// Prefab describing actual attack to be spawned
+    /// </summary>
     public Attack Prefab;
 
+    /// <summary>
+    /// On hit event listeners
+    /// </summary>
     public UnityEvent<Entity> OnHit;
 
+    /// <summary>
+    /// Attack end event listeners
+    /// </summary>
     public UnityEvent<Entity[]> OnEnd;    
 
+    /// <summary>
+    /// Determines the parent for the spawned attack object
+    /// When false the owner will be set as the parent object
+    /// When true attack will become a child of the owners parent
+    /// </summary>
     public bool UseWorldSpace;
 }
