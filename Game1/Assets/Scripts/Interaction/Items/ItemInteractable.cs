@@ -3,10 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Interactable for dropped items
+/// Interactable for dropped items.
+/// Requires a sprite to draw the item to.
 /// </summary>
+[RequireComponent(typeof(SpriteRenderer))]
 public class ItemInteractable : Interactable
 {
+    void Awake()
+    {
+        // Apply item sprite to the sprite renderer
+        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+        sprite.sprite = Item.Sprite;
+    }
+
+    /// <summary>
+    /// Actual item to be picked up.
+    /// </summary>
     public Item Item;
 
     /// <summary>
