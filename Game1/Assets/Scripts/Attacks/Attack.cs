@@ -100,7 +100,10 @@ public class Attack : MonoBehaviour
     }
 
     /// <summary>
-    /// Called for each intersecting collider during physics update
+    /// Called for each intersecting collider during physics update.
+    /// Could use OnTrigger enter to avoid multi collisions, but would lead to issue
+    /// where an enitity who lost the untargetable state whilst in an attack collider
+    /// would ignore further collisions and not take damage
     /// </summary>
     private void OnTriggerStay2D(Collider2D collider)
     {
