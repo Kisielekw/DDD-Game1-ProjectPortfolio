@@ -22,10 +22,22 @@ public class DialogManager : MonoBehaviour
     public GameObject[] PlayerSlots;
     public GameObject[] ShopSlots;
 
+    /// <summary>
+    /// Getter for dialog active state.
+    /// </summary>
+    /// <remarks>
+    /// See <see cref="m_TargetPlayer"/>.
+    /// </remarks>
     public bool InDialog { 
         get { return m_TargetPlayer != null; }
     }
 
+    /// <summary>
+    /// Current target player.
+    /// </summary>
+    /// <value>
+    /// Whilst null dialog manager is considered as inactive.
+    /// </value>
     private Player m_TargetPlayer = null;
 
     private Dialog currentDialog;
