@@ -5,6 +5,7 @@ using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEditor.Progress;
+using UnityEngine.Events;
 
 [Serializable]
 public struct ItemNumber
@@ -13,6 +14,10 @@ public struct ItemNumber
     public int Number;
 }
 
+/// <summary>
+/// Entity describing a Player, mostly handles input such as movement and attacks
+/// but also stores any required data such as held items.
+/// </summary>
 public class Player : Entity
 {
     private Vector2 m_MoveAxis;
@@ -26,6 +31,11 @@ public class Player : Entity
     private List<Quest> m_quests;
 
     public List<ItemNumber> m_Inventory;
+
+    /// <summary>
+    /// Player interaction event
+    /// </summary>
+    public UnityEvent<Player> InteractEvent;
 
     /// <summary>
     /// Struct container for all player attacks
@@ -194,5 +204,14 @@ public class Player : Entity
         {
             quest.UpdateKill();
         }
+    }
+
+    /// <summary>
+    /// Passes the local interact input event to a public event
+    /// allowing other objects to easily handle interaction events
+    /// </summary>
+    public void OnInteract()
+    {
+        InteractEvent.Invoke(this);
     }
 }
