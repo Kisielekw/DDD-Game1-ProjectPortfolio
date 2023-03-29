@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 7532141164602982425}
   - component: {fileID: 7665466076543644313}
   - component: {fileID: 5565856476577179750}
-  - component: {fileID: 541428617}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -254,7 +253,7 @@ MonoBehaviour:
     m_ActionName: Player/DialogActivate[/Keyboard/e]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 541428617}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: DialogManager, Assembly-CSharp
         m_MethodName: ContinueDialog
         m_Mode: 0
@@ -273,41 +272,3 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &541428617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3172823658916705024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 521770f25f13e08499c79e219d1b5309, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DialogPannel: {fileID: 0}
-  DialogText: {fileID: 0}
-  QuestPannel: {fileID: 0}
-  QuestName: {fileID: 0}
-  QuestDescription: {fileID: 0}
-  ShopPannel: {fileID: 0}
-  PlayerSlots:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  ShopSlots:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}

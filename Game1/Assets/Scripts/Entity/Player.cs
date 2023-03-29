@@ -18,6 +18,7 @@ public struct ItemNumber
 /// Entity describing a Player, mostly handles input such as movement and attacks
 /// but also stores any required data such as held items.
 /// </summary>
+[RequireComponent(typeof(PlayerInput))]
 public class Player : Entity
 {
     /// <summary>
@@ -139,7 +140,7 @@ public class Player : Entity
     /// </remarks>
     private void FixedUpdate()
     {
-        if (m_MoveAxis != Vector2.zero && !DialogManager.Instance().inDilaog)
+        if (m_MoveAxis != Vector2.zero && !DialogManager.Instance().InDialog)
             transform.position += new Vector3(m_MoveAxis.x, m_MoveAxis.y, 0) * m_Speed * Time.deltaTime;
     }
 
@@ -276,9 +277,11 @@ public class Player : Entity
     /// Passes local interact input event to a public event,
     /// allowing other objects to easily handle interaction events,
     /// such as with <see cref="Interactables"/>.
+    /// Can only interact if <see cref="m_CanAct">actable</see>.
     /// </remarks>
     public void OnInteract()
     {
-        InteractEvent.Invoke(this);
+        if (m_CanAct)
+            InteractEvent.Invoke(this);
     }
 }
