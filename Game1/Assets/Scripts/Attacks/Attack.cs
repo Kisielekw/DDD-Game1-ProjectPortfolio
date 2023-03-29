@@ -190,7 +190,7 @@ public class Attack : MonoBehaviour
     /// </summary>
     /// <remarks>
     /// Could use OnTrigger enter to avoid multi collisions, but would lead to issue
-    /// where an enitity who lost the untargetable state whilst in an attack collider,
+    /// where an enitity who lost the <see cref="Entity.EntityStats.UnTargetable"/> state whilst in an attack collider,
     /// ignoring further collisions and not taking damage.
     /// </remarks>
     private void OnTriggerStay2D(Collider2D collider)
