@@ -20,10 +20,20 @@ public struct ItemNumber
 /// </summary>
 public class Player : Entity
 {
+    /// <summary>
+    /// Current direction of movement.
+    /// </summary>
+    /// <remarks>
+    /// Set by <see cref="OnMove"/>.
+    /// </remarks>
     private Vector2 m_MoveAxis;
 
+    /// <summary>
+    /// Movement speed.
+    /// </summary>
     [SerializeField]
     private float m_Speed;
+
     private bool isDodgeing;
     private float dodgeEnd;
 
@@ -33,32 +43,65 @@ public class Player : Entity
     public List<ItemNumber> m_Inventory;
 
     /// <summary>
-    /// Player interaction event
+    /// Player interaction event.
     /// </summary>
+    /// <value>
+    /// Passes self to callback for identification.
+    /// </value>
     public UnityEvent<Player> InteractEvent;
 
     /// <summary>
-    /// Struct container for all player attacks
+    /// Struct container for all player attacks.
     /// </summary>
+    /// <remarks>
+    /// Mainly for sorting in unity editor,
+    /// contains various <see cref="AttackInfo"/> templates.
+    /// </remarks>
     [Serializable]
     public struct Attacks
     {
         /// <summary>
-        /// Basic melee attack
+        /// Basic melee attack.
         /// </summary>
         public AttackInfo Melee;
     }
 
+    /// <summary>
+    /// See <see cref="Attacks"/>.
+    /// </summary>
     [SerializeField]
     private Attacks m_Attacks;
 
     /// <summary>
-    /// Boolean describing wether player can take new actions
+    /// Can the player take new actions?
+    /// Boolean describing whether player can take new actions
     /// Used for locking input whilst in animation i.e. whilst dodgeing
     /// </summary>
+    /// <value>
+    /// <list type="table">
+    ///     <item>
+    ///         <term>True</term>
+    ///         <description>
+    ///             Can act as normal.
+    ///         </description>
+    ///     </item>
+    ///     <item>
+    ///         <term>False</term>
+    ///         <description>
+    ///             Cannot take new actions,
+    ///             likely already taking an action such as dodging.
+    ///         </description>
+    ///     </item>
+    /// </list>
+    /// </value>
     private bool m_CanAct = true;
 
-    // Start is called before the first frame update
+    /// <summary>
+    /// Called on creation.
+    /// </summary>
+    /// <remarks>
+    /// Setup default values. Check for interaction with inheritance.
+    /// </remarks>
     void Start()
     {
         m_MoveAxis = Vector2.zero;
@@ -72,7 +115,12 @@ public class Player : Entity
         m_Inventory = new List<ItemNumber>(10);
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Per frame update.
+    /// </summary>
+    /// <remarks>
+    /// If a dodge ends, reverts to normal behaviour.
+    /// </remarks>
     void Update()
     {
         if (isDodgeing && Time.time >= dodgeEnd)
@@ -82,6 +130,13 @@ public class Player : Entity
         }
     }
 
+    /// <summary>
+    /// Physics synced update.
+    /// </summary>
+    /// <remarks>
+    /// Apply <see cref="m_MoveAxis"/> to player position using
+    /// <see cref="m_Speed"/>.
+    /// </remarks>
     private void FixedUpdate()
     {
         if (m_MoveAxis != Vector2.zero && !DialogManager.Instance().inDilaog)
@@ -89,9 +144,9 @@ public class Player : Entity
     }
 
     /// <summary>
-    /// Captures current movement axis using unity's Input Event System
+    /// Capture current movement axis using Unity's Input Event System.
     /// </summary>
-    /// <param name="val">Input event parameters</param>
+    /// <param name="val">Movement axis.</param>
     public void OnMove(InputValue val)
     {
         m_MoveAxis = val.Get<Vector2>();
@@ -115,8 +170,13 @@ public class Player : Entity
     }
 
     /// <summary>
-    /// Attempt to create melee attack from info template
+    /// Basic melee attack.
     /// </summary>
+    /// <remarks>
+    /// Attack is constructed from <see cref="Attacks.Melee"/>,
+    /// rotated towards current mouse position, relative to self.
+    /// Disables <see cref="m_CanAct"/> until attack ends.
+    /// </remarks>
     public void OnAttack()
     {
         if (!m_CanAct)
@@ -136,8 +196,11 @@ public class Player : Entity
     }
 
     /// <summary>
-    /// Attack end Callback
+    /// <see cref="Attacks.Melee.OnEnd"/> callback. 
     /// </summary>
+    /// <remarks>
+    /// Re-enables <see cref="m_CanAct"/> after <see cref="OnAttack"/>
+    /// </remarks.
     public void AttackEnd(Entity[] hitList)
     {
         m_CanAct = true;
@@ -207,9 +270,13 @@ public class Player : Entity
     }
 
     /// <summary>
-    /// Passes the local interact input event to a public event
-    /// allowing other objects to easily handle interaction events
+    /// Player interaction handling.
     /// </summary>
+    /// <remarks>
+    /// Passes local interact input event to a public event,
+    /// allowing other objects to easily handle interaction events,
+    /// such as with <see cref="Interactables"/>.
+    /// </remarks>
     public void OnInteract()
     {
         InteractEvent.Invoke(this);
