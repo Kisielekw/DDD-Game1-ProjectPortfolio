@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The Shop component of a ShopNPC
+/// </summary>
 public class ShopNPC : MonoBehaviour
 {
     public List<ItemNumber> ItemList;

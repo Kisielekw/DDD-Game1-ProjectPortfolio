@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// The Dialog Component of a DialogNPC
+/// </summary>
 public class DialogNPC : MonoBehaviour
 {
     [Header("Speech")]

@@ -2,11 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The Component of ItemObjects
+/// </summary>
 [System.Serializable]
 public class ItemObject : MonoBehaviour
 {
+    /// <summary>
+    /// Chacks is the player is in range to pick it up
+    /// </summary>
     private bool inPlayerRange;
 
+    /// <summary>
+    /// The item that the GameObject represents
+    /// </summary>
     public Item Item;
 
     // Start is called before the first frame update
