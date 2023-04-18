@@ -2,40 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShopNPC : MonoBehaviour
+public class ShopNPC : Interactable
 {
     public List<ItemNumber> ItemList;
-
-    private bool isInRange;
 
     // Start is called before the first frame update
     void Start()
     {
-        isInRange = false;
     }
 
     // Update is called once per frame
     void Update()
-    {
-        if(isInRange && Input.GetKeyDown(KeyCode.F))
-        {
-            DialogManager.Instance().EnterShop(this);
-        }
-    }
+    { }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected override void Interact(Player player)
     {
-        if(collision.gameObject.tag == "Player")
-        {
-            isInRange = true;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            isInRange = false;
-        }
+        DialogManager.Instance().EnterShop(this, player);
     }
 }

@@ -20,7 +20,6 @@ public class DialogNPC : Interactable
         }
         else
         {
-
             Indicator.SetActive(false);
         }
     }

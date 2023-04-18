@@ -29,7 +29,7 @@ public class DialogManager : MonoBehaviour
     /// See <see cref="m_TargetPlayer"/>.
     /// </remarks>
     public bool InDialog { 
-        get { return m_TargetPlayer != null; }
+        get { return DialogPannel.activeInHierarchy; }
     }
 
     /// <summary>
@@ -109,7 +109,7 @@ public class DialogManager : MonoBehaviour
         if (!InDialog)
             return;
 
-        if (dialogPointer < currentDialog.Speech.Length && InDialog)
+        else if (dialogPointer < currentDialog.Speech.Length && InDialog)
             DialogText.text = currentDialog.Speech[dialogPointer++];
 
         else 
@@ -163,13 +163,19 @@ public class DialogManager : MonoBehaviour
         gameObject.GetComponent<Player>().AddQuest(currentDialog.Quest);
     }
 
-    public void EnterShop(ShopNPC pShop)
+    /// <summary>
+    /// Set up UI to show shop.
+    /// </summary>
+    /// <param name="pShop">Shop being entered.</param>
+    /// <param name="player">Player entering the shop.</param>
+    public void EnterShop(ShopNPC pShop, Player player)
     {
-        //InDialog = true;
+        SetEnabled(player);
+
         ShopPannel.SetActive(true);
         currentShop = pShop;
 
-        List<ItemNumber> playerInv = GetComponent<Player>().m_Inventory;
+        List<ItemNumber> playerInv = player.m_Inventory;
         List<ItemNumber> shopInv = currentShop.ItemList;
 
         for(int i = 0; i < 9; i++)
@@ -188,8 +194,23 @@ public class DialogManager : MonoBehaviour
 
     public void ExitShop()
     {
-        //InDialog = false;
+        SetDisabled();
         ShopPannel.SetActive(false);
+    }
+
+    /// <summary>
+    /// Make dialog manager active.
+    /// </summary>
+    /// <remarks>
+    /// Disables the <see cref="m_Player">target player</see> input component,
+    /// and enambles <see cref="m_Input"/>.
+    /// </remarks>
+    /// <param name="player">target player</param>
+    private void SetEnabled(Player player)
+    {
+        m_TargetPlayer = player;
+        m_TargetPlayer.gameObject.GetComponent<PlayerInput>().enabled = false;
+        m_Input.enabled = true;
     }
 
     /// <summary>
