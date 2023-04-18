@@ -4,22 +4,31 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 using UnityEngine.UI;
+using System.Linq;
 
+/// <summary>
+/// Manager for all things NPC including dialog, quests and shops. Controles what is diplayed when player triggers dialog or a shop.
+/// </summary>
 [RequireComponent(typeof(PlayerInput))]
 public class DialogManager : MonoBehaviour
 {
     private static DialogManager instance;
 
     [Header("Dialog")]
+    //The UI used for Dialog
     public GameObject DialogPannel;
     public TextMeshProUGUI DialogText;
     [Header("Quest")]
+    //The UI used for Quests
     public GameObject QuestPannel;
     public TextMeshProUGUI QuestName;
     public TextMeshProUGUI QuestDescription;
     [Header("Shop")]
+    //The UI used for Shops
     public GameObject ShopPannel;
+    //The Players inventory
     public GameObject[] PlayerSlots;
+    //The Shops inventory
     public GameObject[] ShopSlots;
 
     /// <summary>
@@ -40,9 +49,11 @@ public class DialogManager : MonoBehaviour
     /// </value>
     private Player m_TargetPlayer = null;
 
+    //The dialog that contains all the speach fro the npc the player is curently speaking to
     private Dialog currentDialog;
     private int dialogPointer;
 
+    //The shop the player is interacting with
     private ShopNPC currentShop;
 
     /// <summary>
@@ -74,9 +85,14 @@ public class DialogManager : MonoBehaviour
         return instance;
     }
 
+    /// <summary>
+    /// When the program is run at the start of the game it sets the inDialog feald to false and hides all the NPC interaction UI
+    /// </summary>
     private void Start()
     {
         DialogPannel.SetActive(false);
+        QuestPannel.SetActive(false);
+        ShopPannel.SetActive(false);
     }
 
     /// <summary>
@@ -192,6 +208,10 @@ public class DialogManager : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// Closes the Shop UI and sets inDialog to false
+    /// </summary>
     public void ExitShop()
     {
         SetDisabled();

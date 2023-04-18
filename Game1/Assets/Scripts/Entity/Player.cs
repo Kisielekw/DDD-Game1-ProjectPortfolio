@@ -40,6 +40,7 @@ public class Player : Entity
 
     [SerializeField]
     private List<Quest> m_quests;
+    public List<Quest> Quests { get { return m_quests; } }
 
     public List<ItemNumber> m_Inventory;
 
@@ -220,6 +221,11 @@ public class Player : Entity
         }
     }
 
+
+    /// <summary>
+    /// Adds item to the players inventory
+    /// </summary>
+    /// <param name="pItem">The item you want to add to inventory</param>
     public void AddItem(Item pItem)
     {
         for (int i = 0; i < m_Inventory.Count; i++)
@@ -229,15 +235,21 @@ public class Player : Entity
                 ItemNumber iN = m_Inventory[i];
                 iN.Number++;
                 m_Inventory[i] = iN;
-                
+                UpdateItemQuest(pItem);
                 return;
             }
         }
 
         if (m_Inventory.Count == 9) return;
         m_Inventory.Add(new ItemNumber() { item = pItem, Number = 1 });
+        UpdateItemQuest(pItem);
     }
 
+
+    /// <summary>
+    /// Removes item from inventory
+    /// </summary>
+    /// <param name="pItem">The item you want to remove</param>
     void RemoveItem(Item pItem)
     {
         for (int i = 0; i < m_Inventory.Count; i++)
@@ -254,6 +266,11 @@ public class Player : Entity
         }
     }
 
+
+    /// <summary>
+    /// Updates Quests of the Fetch veriaty
+    /// </summary>
+    /// <param name="pItem">The item the playe picked up</param>
     void UpdateItemQuest(Item pItem)
     {
         foreach (Quest quest in m_quests)
@@ -262,12 +279,21 @@ public class Player : Entity
         }
     }
 
+    /// <summary>
+    /// Updates the Quests of Kill veriaty
+    /// </summary>
     void UpdateKillQuest()
     {
         foreach (Quest quest in m_quests)
         {
             quest.UpdateKill();
         }
+    }
+
+    public void RemoveQuest(Quest pQuest)
+    {
+        if (!m_quests.Contains(pQuest)) return;
+        m_quests.Remove(pQuest);
     }
 
     /// <summary>
