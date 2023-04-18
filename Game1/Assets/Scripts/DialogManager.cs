@@ -104,9 +104,7 @@ public class DialogManager : MonoBehaviour
     {
         currentDialog = pDialog;
 
-        m_TargetPlayer = player;
-        m_TargetPlayer.gameObject.GetComponent<PlayerInput>().enabled = false;
-        m_Input.enabled = true;
+        SetEnabled(player);
         
         DialogPannel.SetActive(true);
         dialogPointer = 0;
@@ -143,11 +141,22 @@ public class DialogManager : MonoBehaviour
         // Check if dialog quest exists before attempting to access data
         if(currentDialog.HasQuest)
         {
+            IEnumerable<Quest> playerQuestMatch = m_TargetPlayer.Quests.Where(q => q.ID == currentDialog.Quest.ID);
+
             if(!currentDialog.Quest.isStarted)
             {
                 QuestName.text = currentDialog.Quest.QuestName;
                 QuestDescription.text = currentDialog.Quest.QuestDescription;
                 QuestPannel.SetActive(true);
+            }
+
+            else if (playerQuestMatch.Count() > 0)
+            {
+                if (playerQuestMatch.First<Quest>().isCompleat)
+                {
+                    EnterDialog(new Dialog(new string[] { string.Format("I see you compleated the Quest {0} congratulations", currentDialog.Quest.QuestName) }), m_TargetPlayer);
+                    m_TargetPlayer.RemoveQuest(playerQuestMatch.First<Quest>());
+                }
             }
         }
 
