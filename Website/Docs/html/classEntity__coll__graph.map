@@ -1,0 +1,5 @@
+<map id="Entity" name="Entity">
+<area shape="rect" id="node1" title="Abstract class used to represent all targetable objects At base all entities must have a health value..." alt="" coords="113,95,173,121"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,5,129,32"/>
+<area shape="rect" id="node3" href="$structEntity_1_1EntityStats.html" title="Container for common entity stats." alt="" coords="154,5,287,32"/>
+</map>

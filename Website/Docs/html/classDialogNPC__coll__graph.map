@@ -1,0 +1,10 @@
+<map id="DialogNPC" name="DialogNPC">
+<area shape="rect" id="node1" title="The Dialog Component of a DialogNPC" alt="" coords="78,363,169,389"/>
+<area shape="rect" id="node2" href="$classInteractable.html" title="Abstract class applicable to all interactables." alt="" coords="21,273,121,300"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,184,129,211"/>
+<area shape="rect" id="node4" href="$classDialog.html" title="Class containing NPC dialog and any quests they give" alt="" coords="149,273,213,300"/>
+<area shape="rect" id="node5" href="$classQuest.html" title="Contains all the information about a quest" alt="" coords="153,184,213,211"/>
+<area shape="rect" id="node6" href="$classQuestGoal.html" title="The goal of a quest" alt="" coords="81,95,171,121"/>
+<area shape="rect" id="node7" href="$classItem.html" title="The Item class contains all infformation about an item" alt="" coords="100,5,152,32"/>
+<area shape="rect" id="node8" title=" " alt="" coords="195,95,254,121"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="DialogNPC" name="DialogNPC">
+<area shape="rect" id="node1" title="The Dialog Component of a DialogNPC" alt="" coords="22,155,113,181"/>
+<area shape="rect" id="node2" href="$classInteractable.html" title="Abstract class applicable to all interactables." alt="" coords="17,80,117,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,5,129,32"/>
+</map>

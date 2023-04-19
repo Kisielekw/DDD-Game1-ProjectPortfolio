@@ -1,0 +1,9 @@
+<map id="Player" name="Player">
+<area shape="rect" id="node1" title="Entity describing a Player, mostly handles input such as movement and attacks but also stores any req..." alt="" coords="84,363,147,389"/>
+<area shape="rect" id="node2" href="$classEntity.html" title="Abstract class used to represent all targetable objects At base all entities must have a health value..." alt="" coords="132,95,192,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,5,129,32"/>
+<area shape="rect" id="node7" href="$classAttack.html" title="Generic attack." alt="" coords="35,95,99,121"/>
+<area shape="rect" id="node4" href="$structEntity_1_1EntityStats.html" title="Container for common entity stats." alt="" coords="154,5,287,32"/>
+<area shape="rect" id="node5" href="$structPlayer_1_1Attacks.html" title="Struct container for all player attacks." alt="" coords="10,273,125,300"/>
+<area shape="rect" id="node6" href="$structAttackInfo.html" title="Struct container, describing an Attack." alt="" coords="23,184,112,211"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="ItemInteractable" name="ItemInteractable">
+<area shape="rect" id="node1" title="Interactable for any pick&#45;upable Item." alt="" coords="77,171,207,197"/>
+<area shape="rect" id="node2" href="$classInteractable.html" title="Abstract class applicable to all interactables." alt="" coords="17,81,117,108"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,5,129,32"/>
+<area shape="rect" id="node4" href="$classItem.html" title="The Item class contains all infformation about an item" alt="" coords="141,81,193,108"/>
+</map>

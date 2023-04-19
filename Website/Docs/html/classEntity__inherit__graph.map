@@ -1,0 +1,7 @@
+<map id="Entity" name="Entity">
+<area shape="rect" id="node1" title="Abstract class used to represent all targetable objects At base all entities must have a health value..." alt="" coords="107,80,167,107"/>
+<area shape="rect" id="node3" href="$classDummy.html" title=" " alt="" coords="5,155,80,181"/>
+<area shape="rect" id="node4" href="$classEnemy.html" title="Basic enemy capable of pathfinding to a target position." alt="" coords="104,155,171,181"/>
+<area shape="rect" id="node5" href="$classPlayer.html" title="Entity describing a Player, mostly handles input such as movement and attacks but also stores any req..." alt="" coords="195,155,258,181"/>
+<area shape="rect" id="node2" title=" " alt="" coords="75,5,199,32"/>
+</map>

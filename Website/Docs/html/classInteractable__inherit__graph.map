@@ -1,0 +1,7 @@
+<map id="Interactable" name="Interactable">
+<area shape="rect" id="node1" title="Abstract class applicable to all interactables." alt="" coords="135,80,235,107"/>
+<area shape="rect" id="node3" href="$classDialogNPC.html" title="The Dialog Component of a DialogNPC" alt="" coords="5,155,96,181"/>
+<area shape="rect" id="node4" href="$classItemInteractable.html" title="Interactable for any pick&#45;upable Item." alt="" coords="120,155,251,181"/>
+<area shape="rect" id="node5" href="$classShopNPC.html" title="The Shop component of a ShopNPC" alt="" coords="275,155,357,181"/>
+<area shape="rect" id="node2" title=" " alt="" coords="123,5,247,32"/>
+</map>

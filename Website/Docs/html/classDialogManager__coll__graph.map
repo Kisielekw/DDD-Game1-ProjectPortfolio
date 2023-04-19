@@ -1,0 +1,17 @@
+<map id="DialogManager" name="DialogManager">
+<area shape="rect" id="node1" title="Manager for all things NPC including dialog, quests and shops. Controles what is diplayed when player..." alt="" coords="160,464,281,491"/>
+<area shape="rect" id="node2" title=" " alt="" coords="117,5,241,32"/>
+<area shape="rect" id="node4" href="$classInteractable.html" title="Abstract class applicable to all interactables." alt="" coords="7,95,107,121"/>
+<area shape="rect" id="node11" href="$classEntity.html" title="Abstract class used to represent all targetable objects At base all entities must have a health value..." alt="" coords="307,95,367,121"/>
+<area shape="rect" id="node15" href="$classAttack.html" title="Generic attack." alt="" coords="423,95,487,121"/>
+<area shape="rect" id="node3" href="$classShopNPC.html" title="The Shop component of a ShopNPC" alt="" coords="5,235,87,261"/>
+<area shape="rect" id="node5" href="$classDialog.html" title="Class containing NPC dialog and any quests they give" alt="" coords="189,375,253,401"/>
+<area shape="rect" id="node6" href="$classQuest.html" title="Contains all the information about a quest" alt="" coords="191,285,251,312"/>
+<area shape="rect" id="node7" href="$classQuestGoal.html" title="The goal of a quest" alt="" coords="183,184,274,211"/>
+<area shape="rect" id="node8" href="$classItem.html" title="The Item class contains all infformation about an item" alt="" coords="203,95,255,121"/>
+<area shape="rect" id="node9" title=" " alt="" coords="314,184,373,211"/>
+<area shape="rect" id="node10" href="$classPlayer.html" title="Entity describing a Player, mostly handles input such as movement and attacks but also stores any req..." alt="" coords="385,375,448,401"/>
+<area shape="rect" id="node12" href="$structEntity_1_1EntityStats.html" title="Container for common entity stats." alt="" coords="270,5,403,32"/>
+<area shape="rect" id="node13" href="$structPlayer_1_1Attacks.html" title="Struct container for all player attacks." alt="" coords="454,285,569,312"/>
+<area shape="rect" id="node14" href="$structAttackInfo.html" title="Struct container, describing an Attack." alt="" coords="459,184,548,211"/>
+</map>

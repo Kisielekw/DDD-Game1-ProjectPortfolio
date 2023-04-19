@@ -1,0 +1,6 @@
+<map id="Player.Attacks" name="Player.Attacks">
+<area shape="rect" id="node1" title="Struct container for all player attacks." alt="" coords="10,260,125,287"/>
+<area shape="rect" id="node2" href="$structAttackInfo.html" title="Struct container, describing an Attack." alt="" coords="23,171,112,197"/>
+<area shape="rect" id="node3" href="$classAttack.html" title="Generic attack." alt="" coords="35,81,99,108"/>
+<area shape="rect" id="node4" title=" " alt="" coords="5,5,129,32"/>
+</map>

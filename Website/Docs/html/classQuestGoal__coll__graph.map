@@ -1,0 +1,4 @@
+<map id="QuestGoal" name="QuestGoal">
+<area shape="rect" id="node1" title="The goal of a quest" alt="" coords="5,95,96,121"/>
+<area shape="rect" id="node2" href="$classItem.html" title="The Item class contains all infformation about an item" alt="" coords="25,5,77,32"/>
+</map>
