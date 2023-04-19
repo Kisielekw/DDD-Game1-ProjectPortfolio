@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 7532141164602982425}
   - component: {fileID: 7665466076543644313}
   - component: {fileID: 5565856476577179750}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -119,7 +119,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -148,6 +148,9 @@ MonoBehaviour:
   m_Speed: 2
   m_quests: []
   m_Inventory: []
+  InteractEvent:
+    m_PersistentCalls:
+      m_Calls: []
   m_Attacks:
     Melee:
       Owner: {fileID: 0}
@@ -184,7 +187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: a358754f3d7861fa09f7da6a7c54e821, type: 3}
-  m_NotificationBehavior: 2
+  m_NotificationBehavior: 0
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -249,7 +252,19 @@ MonoBehaviour:
     m_ActionId: 9590763d-8a83-4458-8c6d-da843880c210
     m_ActionName: Player/DialogActivate[/Keyboard/e]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: DialogManager, Assembly-CSharp
+        m_MethodName: ContinueDialog
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 030c3a27-53b9-44fc-89ff-771e7622e3bc
     m_ActionName: Player/DialogContinue[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0

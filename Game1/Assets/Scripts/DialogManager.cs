@@ -9,6 +9,7 @@ using System.Linq;
 /// <summary>
 /// Manager for all things NPC including dialog, quests and shops. Controles what is diplayed when player triggers dialog or a shop.
 /// </summary>
+[RequireComponent(typeof(PlayerInput))]
 public class DialogManager : MonoBehaviour
 {
     private static DialogManager instance;
@@ -31,9 +32,22 @@ public class DialogManager : MonoBehaviour
     public GameObject[] ShopSlots;
 
     /// <summary>
-    /// Checks if the player is ocupided by an NPC
+    /// Getter for dialog active state.
     /// </summary>
-    public bool inDilaog { get; private set; }
+    /// <remarks>
+    /// See <see cref="m_TargetPlayer"/>.
+    /// </remarks>
+    public bool InDialog { 
+        get { return DialogPannel.activeInHierarchy; }
+    }
+
+    /// <summary>
+    /// Current target player.
+    /// </summary>
+    /// <value>
+    /// Whilst null dialog manager is considered as inactive.
+    /// </value>
+    private Player m_TargetPlayer = null;
 
     //The dialog that contains all the speach fro the npc the player is curently speaking to
     private Dialog currentDialog;
@@ -42,10 +56,24 @@ public class DialogManager : MonoBehaviour
     //The shop the player is interacting with
     private ShopNPC currentShop;
 
-    
+    /// <summary>
+    /// Input manager.
+    /// </summary>
+    /// <remarks>
+    /// Dialog manager's own input manager.
+    /// Whilst a <see cref="Player"/> is in dialog, 
+    /// their input manager is disabled and this enabled,
+    /// Preventing player from acting whilst in dialog state.
+    /// </remarks>
+    private PlayerInput m_Input;
+
     private void Awake()
     {
         instance = this;
+
+        // Get own input component and disable
+        m_Input = GetComponent<PlayerInput>();
+        m_Input.enabled = false;
     }
 
     /// <summary>
@@ -62,7 +90,6 @@ public class DialogManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        inDilaog = false;
         DialogPannel.SetActive(false);
         QuestPannel.SetActive(false);
         ShopPannel.SetActive(false);
@@ -72,25 +99,31 @@ public class DialogManager : MonoBehaviour
     /// Sets up UI to show dialog
     /// </summary>
     /// <param name="pDialog">The Dialog to show the player</param>
-    public void EnterDialog(Dialog pDialog)
+    /// <param name="player">Player entering dialog</param>
+    public void EnterDialog(Dialog pDialog, Player player)
     {
         currentDialog = pDialog;
-        inDilaog = true;
+
+        SetEnabled(player);
+        
         DialogPannel.SetActive(true);
         dialogPointer = 0;
 
-        OnDialogContinue();
+        OnInteract();
     }
 
     /// <summary>
-    /// Continues the dialog and checks weather to end or not
+    /// Interact input callback.
     /// </summary>
-    public void OnDialogContinue()
+    /// <remarks>
+    /// Advances along the dialog tree if possible.
+    /// </remarks>
+    public void OnInteract()
     {
-        if (!inDilaog) 
+        if (!InDialog)
             return;
 
-        if (dialogPointer < currentDialog.Speech.Length && inDilaog)
+        else if (dialogPointer < currentDialog.Speech.Length && InDialog)
             DialogText.text = currentDialog.Speech[dialogPointer++];
 
         else 
@@ -105,22 +138,30 @@ public class DialogManager : MonoBehaviour
         DialogPannel.SetActive(false);
         DialogText.text = "";
 
-        IEnumerable<Quest> playerQuestMastch = GetComponent<Player>().Quests.Where(q => q.ID == currentDialog.Quest.ID);
+        // Check if dialog quest exists before attempting to access data
+        if(currentDialog.HasQuest)
+        {
+            IEnumerable<Quest> playerQuestMatch = m_TargetPlayer.Quests.Where(q => q.ID == currentDialog.Quest.ID);
 
-        if (currentDialog.Quest != null && !currentDialog.Quest.isStarted)
-        {
-            QuestName.text = currentDialog.Quest.QuestName;
-            QuestDescription.text = currentDialog.Quest.QuestDescription;
-            QuestPannel.SetActive(true);
+            if(!currentDialog.Quest.isStarted)
+            {
+                QuestName.text = currentDialog.Quest.QuestName;
+                QuestDescription.text = currentDialog.Quest.QuestDescription;
+                QuestPannel.SetActive(true);
+            }
+
+            else if (playerQuestMatch.Count() > 0)
+            {
+                if (playerQuestMatch.First<Quest>().isCompleat)
+                {
+                    EnterDialog(new Dialog(new string[] { string.Format("I see you compleated the Quest {0} congratulations", currentDialog.Quest.QuestName) }), m_TargetPlayer);
+                    m_TargetPlayer.RemoveQuest(playerQuestMatch.First<Quest>());
+                }
+            }
         }
-        if(currentDialog.Quest != null &&
-            playerQuestMastch.Count() == 1 &&
-            playerQuestMastch.First<Quest>().isCompleat)
-        {
-            EnterDialog(new Dialog(new string[] { string.Format("I see you compleated the Quest {0} congratulations", currentDialog.Quest.QuestName) }));
-            GetComponent<Player>().RemoveQuest(playerQuestMastch.First<Quest>());
-        }
-        else inDilaog = false;
+
+        else
+            SetDisabled();
     }
 
     /// <summary>
@@ -134,7 +175,8 @@ public class DialogManager : MonoBehaviour
             AcceptQuest();
             currentDialog.Quest.isStarted = true;
         }
-        inDilaog = false;
+        
+        SetDisabled();
         QuestPannel.SetActive(false);
     }
 
@@ -147,16 +189,18 @@ public class DialogManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Activates the shop UI and shows the inventory of the player and the shop on screen
+    /// Set up UI to show shop.
     /// </summary>
-    /// <param name="pShop"> The Shop the player is interacting with</param>
-    public void EnterShop(ShopNPC pShop)
+    /// <param name="pShop">Shop being entered.</param>
+    /// <param name="player">Player entering the shop.</param>
+    public void EnterShop(ShopNPC pShop, Player player)
     {
-        inDilaog = true;
+        SetEnabled(player);
+
         ShopPannel.SetActive(true);
         currentShop = pShop;
 
-        List<ItemNumber> playerInv = GetComponent<Player>().m_Inventory;
+        List<ItemNumber> playerInv = player.m_Inventory;
         List<ItemNumber> shopInv = currentShop.ItemList;
 
         for(int i = 0; i < 9; i++)
@@ -179,7 +223,36 @@ public class DialogManager : MonoBehaviour
     /// </summary>
     public void ExitShop()
     {
-        inDilaog = false;
+        SetDisabled();
         ShopPannel.SetActive(false);
+    }
+
+    /// <summary>
+    /// Make dialog manager active.
+    /// </summary>
+    /// <remarks>
+    /// Disables the <see cref="m_Player">target player</see> input component,
+    /// and enambles <see cref="m_Input"/>.
+    /// </remarks>
+    /// <param name="player">target player</param>
+    private void SetEnabled(Player player)
+    {
+        m_TargetPlayer = player;
+        m_TargetPlayer.gameObject.GetComponent<PlayerInput>().enabled = false;
+        m_Input.enabled = true;
+    }
+
+    /// <summary>
+    /// Return to inactive state.
+    /// </summary>
+    /// <remarks>
+    /// Re-enables the <see cref="m_Player">target player</see> input component,
+    /// and disables <see cref="m_Input"/>.
+    /// </remarks>
+    private void SetDisabled()
+    {
+        m_Input.enabled = false;
+        m_TargetPlayer.gameObject.GetComponent<PlayerInput>().enabled = true;
+        m_TargetPlayer = null;
     }
 }

@@ -11,29 +11,62 @@ using UnityEngine.Events;
 public abstract class Entity : MonoBehaviour
 {
     /// <summary>
-    /// Container for common entity stats
+    /// Container for common entity stats.
     /// </summary>
     [Serializable]
     public struct EntityStats
     {
         /// <summary>
-        /// Maximum HP
+        /// Maximum HP.
         /// </summary>
         public float Max;
         
         /// <summary>
-        /// Current HP
+        /// Current HP.
         /// </summary>
         public float Current;
 
         /// <summary>
-        /// When true this entity is considered untargetable, ignoring any calls to the <see cref="Entity.Damage"/> function
+        /// Targetable state.
         /// </summary>
+        /// <value>
+        /// <list type="table">
+        ///     <item>
+        ///         <term>True</term>
+        ///         <description>
+        ///             Entity is untargetable and cannot be hit by attacks.
+        ///         </description>
+        ///     </item>
+        ///     <item>
+        ///         <term>False</term>
+        ///         <description>
+        ///             Entity acts as normal.
+        ///         </description>
+        ///     </item>
+        /// </list>
+        /// </value>
         public bool UnTargetable;
 
         /// <summary>
-        /// Distinct from the <see cref="Untargetable"/> state, entity will still be considered hit, but no damage will be dealt
+        /// Invincibility state.
         /// </summary>
+        /// <value>
+        /// <list type="table">
+        ///     <item>
+        ///         <term>True</term>
+        ///         <description>
+        ///             Entity is invincible, will still be treated as being <see cref="Attack.Hit(GameObject)">hit</see>,
+        ///             but all damage dealt is reduced to zero.
+        ///         </description>
+        ///     </item>
+        ///     <item>
+        ///         <term>False</term>
+        ///         <description>
+        ///             Entity acts as normal.
+        ///         </description>
+        ///     </item>
+        /// </list>
+        /// </value>
         public bool Invincible;
     }
 
@@ -44,27 +77,57 @@ public abstract class Entity : MonoBehaviour
     protected EntityStats m_Health;
 
     /// <summary>
-    /// Event called when this entity dies
+    /// Death event.
     /// </summary>
+    /// <value>
+    /// Passes self as paramater to determine which entity
+    /// died in callback.
+    /// </value>
     public UnityEvent<Entity>OnDeath;
 
-    // Start is called before the first frame update
+    /// <summary>
+    /// Called on creation.
+    /// </summary>
+    /// <remarks>
+    /// Sets <see cref="EntityStats.Current">health</see> to <see cref="EntityStats.Max">max</see>.
+    /// </remarks>
     void Start()
     {
         m_Health.Current = m_Health.Max;
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Per frame update
+    /// </summary>
     void Update()
     {
         
     }
 
     /// <summary>
-    /// Deal damage to this entity
+    /// Deal damage to this entity.
     /// </summary>
-    /// <param name="damage">Damage dealt</param>
-    /// <returns>False if entity is in untargetable state</returns>
+    /// <remarks>
+    /// Usually called by an <see cref="Attack"/>.
+    /// </remarks>
+    /// <param name="damage">Damage dealt.</param>
+    /// <returns>
+    /// <list type="table">
+    ///     <item>
+    ///         <term>True</term>
+    ///         <description>
+    ///             Damage successfuly dealt.
+    ///         </description>
+    ///     </item>
+    ///     <item>
+    ///         <term>False</term>
+    ///         <description>
+    ///             Damage was not dealt likely due to
+    ///             <see cref="EntityStats.UnTargetable">untargetable</see> state.
+    ///         </description>
+    ///     </item>
+    /// </list>
+    /// </returns>
     public virtual bool Damage(float damage)
     {
         if (m_Health.UnTargetable)

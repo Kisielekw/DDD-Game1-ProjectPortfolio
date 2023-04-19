@@ -14,6 +14,19 @@ public class Dialog
     public string[] Speech;
 
     /// <summary>
+    /// Dialog quest flag.
+    /// </summary>
+    /// <remarks>
+    /// As <see cref="Quest"/> is Serializeable,
+    /// dialogs created in the inspector cannot be null,
+    /// this extra boolean is required.
+    /// </remarks>
+    /// <value>
+    /// Does this dialog have an associated quest?
+    /// </value>
+    public bool HasQuest;
+
+    /// <summary>
     /// The Quest that the NPC give out to the playe after its dialog
     /// </summary>
     public Quest Quest;
