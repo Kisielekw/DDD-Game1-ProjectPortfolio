@@ -1,0 +1,46 @@
+.BackGround{
+    background-color: gray;
+    padding-left: 5%;
+    padding-right: 5%;
+    font-family: 'Lato', sans-serif;
+}
+
+.Header{
+    background-color: white;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 25px;
+    border-width: 5px;
+    border-style: solid;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.HeaderElement{
+    text-decoration:none;
+    text-align: center;
+    color: black;
+    width: 100%;
+    margin: 20px;
+    padding: 10px;
+    border-width: 2px;
+    border-style: solid;
+}
+
+.Header a:hover{
+    background-color: lightgray;
+}
+
+.Header a:active{
+    background-color: gray;
+}
+
+.Text{
+    text-decoration: none;
+    text-align: center;
+    border-width: 2px;
+    border-style: solid;
+    background-color: white;
+    width: 70%;
+    margin: auto;
+}
